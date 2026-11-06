@@ -146,6 +146,17 @@ Requirements: Node.js 20.9 or later and npm.
    Do not rerun migrations that have already succeeded.
 6. In this directory, run `npm run dev` and open `http://localhost:3000`.
 
+## Deploying on Vercel
+
+Set `NEXT_PUBLIC_SITE_URL` to the deployed site URL in the Vercel project
+environment variables, for example `https://your-project.vercel.app`. If it is
+unset or still points to localhost, authentication, invitation, and shareable
+invitation links use Vercel's production domain automatically (or the current
+deployment URL if no production domain is available). In Supabase
+Authentication URL Configuration, set the Site URL to the deployed URL and add
+`https://your-project.vercel.app/**` to the allowed redirect URLs. Replace the
+example domain with your Vercel or custom domain.
+
 The publishable key is intended for use in the application, but it does not
 replace authorization policies. Apply all database migrations before using
 their features. The milestone, event, notification, and financing workflows
