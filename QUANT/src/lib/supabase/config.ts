@@ -30,29 +30,17 @@ export function getSupabaseServiceRoleKey() {
 }
 
 export function getSiteUrl() {
+  const siteUrl = "https://quant-dex-6280.vercel.app";
   const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-  const isLocalSiteUrl =
-    configuredSiteUrl &&
-    /^https?:\/\/(?:localhost|127\.0\.0\.1|\[::1\])(?::\d+)?(?:\/|$)/i.test(
-      configuredSiteUrl,
-    );
-  const vercelHost =
-    process.env.VERCEL_PROJECT_PRODUCTION_URL ?? process.env.VERCEL_URL;
-  const vercelSiteUrl = vercelHost
-    ? /^https?:\/\//i.test(vercelHost)
-      ? vercelHost
-      : `https://${vercelHost}`
-    : undefined;
-  const siteUrl =
-    configuredSiteUrl && !isLocalSiteUrl
-      ? configuredSiteUrl
-      : vercelSiteUrl ?? configuredSiteUrl;
 
-  if (!siteUrl) {
+  if (
+    configuredSiteUrl &&
+    new URL(configuredSiteUrl).origin !== siteUrl
+  ) {
     throw new Error(
-      "The application URL is not configured. Set NEXT_PUBLIC_SITE_URL or deploy to Vercel so authentication callbacks use the deployed URL.",
+      `NEXT_PUBLIC_SITE_URL must be set to ${siteUrl}.`,
     );
   }
 
-  return siteUrl.replace(/\/+$/, "");
+  return siteUrl;
 }

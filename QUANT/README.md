@@ -84,7 +84,7 @@ Supporting files are stored in the private project documents bucket and limited
 to 10 MB. Apply all migrations before using their features. This stage is not
 production-ready.
 
-## Run locally
+## Configuration and development
 
 Requirements: Node.js 20.9 or later and npm.
 
@@ -95,14 +95,13 @@ Requirements: Node.js 20.9 or later and npm.
    required to send account invitation emails and securely finish invitation
    password setup. Keep it server-only: never use a `NEXT_PUBLIC_` prefix or
    commit the value.
-4. In Supabase Authentication URL Configuration, set the local site URL to
-   `http://localhost:3000` and allow `http://localhost:3000/**` as a redirect.
+4. In Supabase Authentication URL Configuration, set the Site URL to
+   `https://quant-dex-6280.vercel.app` and add
+   `https://quant-dex-6280.vercel.app/**` to the allowed redirect URLs.
    Configure Supabase Auth email delivery (SMTP). The default Supabase
    confirmation and invitation email templates can be used; no email-template
    edit is required. The app handles the confirmation tokens returned in the
-   browser URL. Ensure the allowed redirect URLs include
-   `http://localhost:3000/auth/confirm` (or use
-   `http://localhost:3000/**` for local development). If Supabase email
+   browser URL. If Supabase email
    delivery is rate-limited, a client or project manager can create a shareable
    invitation link in the owner portal and send it privately. Treat that link
    like a one-time sign-in credential and share it only with the intended member.
@@ -144,18 +143,13 @@ Requirements: Node.js 20.9 or later and npm.
    activity notifications. Apply it after the milestones/activity/events
    migration.
    Do not rerun migrations that have already succeeded.
-6. In this directory, run `npm run dev` and open `http://localhost:3000`.
+6. In this directory, run `npm run dev`.
 
 ## Deploying on Vercel
 
-Set `NEXT_PUBLIC_SITE_URL` to the deployed site URL in the Vercel project
-environment variables, for example `https://your-project.vercel.app`. If it is
-unset or still points to localhost, authentication, invitation, and shareable
-invitation links use Vercel's production domain automatically (or the current
-deployment URL if no production domain is available). In Supabase
-Authentication URL Configuration, set the Site URL to the deployed URL and add
-`https://your-project.vercel.app/**` to the allowed redirect URLs. Replace the
-example domain with your Vercel or custom domain.
+Set `NEXT_PUBLIC_SITE_URL` in the Vercel project environment variables to
+`https://quant-dex-6280.vercel.app`. Authentication, invitation, and shareable
+invitation links use this site URL.
 
 The publishable key is intended for use in the application, but it does not
 replace authorization policies. Apply all database migrations before using
